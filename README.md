@@ -75,6 +75,10 @@ Xcode에서 `⌘R`로 빌드 & 실행하면 메뉴바에 🎤 아이콘이 나�
 
 Inspired by [칼퇴왕김과장](https://www.youtube.com/watch?v=qwS0lBADIug)의 맥북 음성인식 영상과 [borinomi/mlx-whisper](https://github.com/borinomi/mlx-whisper).
 
+## 만든 사람
+
+[@itsbluetic](https://www.threads.com/@itsbluetic)
+
 ## 라이선스
 
 [MIT](LICENSE)

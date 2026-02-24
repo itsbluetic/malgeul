@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05AE0FC2682F5A5C138ED446 /* MalgeulApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E465BE97BEB4D8B9B73C4E09 /* MalgeulApp.swift */; };
+		6EF96A5726A033B7E5D232AF /* SonioxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C8FB1BA1E60CB474FE13E /* SonioxService.swift */; };
+		8B3607FC801DA9F29404D4B5 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A176F3ED68F424D93830D /* AudioRecorder.swift */; };
+		92A35400AE716CF38A77D5D4 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C99D89D2D53045F089FC702 /* HotkeyManager.swift */; };
+		C987C01F062F62FD0940F9AA /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48413DA50F58B4A23F3C080 /* SoundManager.swift */; };
+		D6A122DA6B29C1CF6C0E3258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53318A453BC19CD33A7E2985 /* AppDelegate.swift */; };
+		DB1A91C1530B07BBFBE8EBA1 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4200B7225C34028C36EB19C1 /* StatusBarController.swift */; };
+		E0F677E9669931D4A2CDFD8A /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656B59FA1A02614D973A9AC0 /* ConfigManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E6A176F3ED68F424D93830D /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		4200B7225C34028C36EB19C1 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		53318A453BC19CD33A7E2985 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		656B59FA1A02614D973A9AC0 /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
+		6C99D89D2D53045F089FC702 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		73B08689AD18027BB13F2281 /* Malgeul.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Malgeul.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B6C8FB1BA1E60CB474FE13E /* SonioxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SonioxService.swift; sourceTree = "<group>"; };
+		7C2D3AAE21E147882EDE743F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		98377D3989649FF846588E65 /* Malgeul.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Malgeul.entitlements; sourceTree = "<group>"; };
+		D48413DA50F58B4A23F3C080 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		E465BE97BEB4D8B9B73C4E09 /* MalgeulApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalgeulApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		2E53FC18830E21B0B5CE6AF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				73B08689AD18027BB13F2281 /* Malgeul.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6FC238DAE3EC77445BB3D84 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				53318A453BC19CD33A7E2985 /* AppDelegate.swift */,
+				0E6A176F3ED68F424D93830D /* AudioRecorder.swift */,
+				656B59FA1A02614D973A9AC0 /* ConfigManager.swift */,
+				6C99D89D2D53045F089FC702 /* HotkeyManager.swift */,
+				7C2D3AAE21E147882EDE743F /* Info.plist */,
+				98377D3989649FF846588E65 /* Malgeul.entitlements */,
+				E465BE97BEB4D8B9B73C4E09 /* MalgeulApp.swift */,
+				7B6C8FB1BA1E60CB474FE13E /* SonioxService.swift */,
+				D48413DA50F58B4A23F3C080 /* SoundManager.swift */,
+				4200B7225C34028C36EB19C1 /* StatusBarController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D7F73F609157AD130A22AD0D = {
+			isa = PBXGroup;
+			children = (
+				A6FC238DAE3EC77445BB3D84 /* Sources */,
+				2E53FC18830E21B0B5CE6AF4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		83BDDB55D503A21CD7094F8F /* Malgeul */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD83E9767F1EA272211E227F /* Build configuration list for PBXNativeTarget "Malgeul" */;
+			buildPhases = (
+				9FBF5F46252C68D1AB9B11A8 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Malgeul;
+			packageProductDependencies = (
+			);
+			productName = Malgeul;
+			productReference = 73B08689AD18027BB13F2281 /* Malgeul.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F2E0EB3C8E256C82C62DD02 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = E2E692C1EF2B39E59FD30743 /* Build configuration list for PBXProject "Malgeul" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D7F73F609157AD130A22AD0D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				83BDDB55D503A21CD7094F8F /* Malgeul */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9FBF5F46252C68D1AB9B11A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6A122DA6B29C1CF6C0E3258 /* AppDelegate.swift in Sources */,
+				8B3607FC801DA9F29404D4B5 /* AudioRecorder.swift in Sources */,
+				E0F677E9669931D4A2CDFD8A /* ConfigManager.swift in Sources */,
+				92A35400AE716CF38A77D5D4 /* HotkeyManager.swift in Sources */,
+				05AE0FC2682F5A5C138ED446 /* MalgeulApp.swift in Sources */,
+				6EF96A5726A033B7E5D232AF /* SonioxService.swift in Sources */,
+				C987C01F062F62FD0940F9AA /* SoundManager.swift in Sources */,
+				DB1A91C1530B07BBFBE8EBA1 /* StatusBarController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		07048D6816D48D2FC2E8C94C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/Malgeul.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.anmen.malgeul;
+				PRODUCT_NAME = Malgeul;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+		49634DBA57E8584274DBB1CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_OBJC_ARC = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		7A1B3F9017CCE63F551CA833 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/Malgeul.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.anmen.malgeul;
+				PRODUCT_NAME = Malgeul;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5;
+			};
+			name = Release;
+		};
+		A13606709BFCAC447D7DBCCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_OBJC_ARC = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD83E9767F1EA272211E227F /* Build configuration list for PBXNativeTarget "Malgeul" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07048D6816D48D2FC2E8C94C /* Debug */,
+				7A1B3F9017CCE63F551CA833 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2E692C1EF2B39E59FD30743 /* Build configuration list for PBXProject "Malgeul" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A13606709BFCAC447D7DBCCE /* Debug */,
+				49634DBA57E8584274DBB1CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F2E0EB3C8E256C82C62DD02 /* Project object */;
+}
