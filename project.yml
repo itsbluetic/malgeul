@@ -1,0 +1,32 @@
+name: Malgeul
+options:
+  bundleIdPrefix: com.anmen
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  minimumXcodeGenVersion: "2.35"
+
+settings:
+  base:
+    SWIFT_VERSION: "5"
+    CLANG_ENABLE_MODULES: YES
+    ENABLE_OBJC_ARC: YES
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+targets:
+  Malgeul:
+    type: application
+    platform: macOS
+    sources:
+      - Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.anmen.malgeul
+        PRODUCT_NAME: Malgeul
+        INFOPLIST_FILE: Sources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/Malgeul.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_VERSION: "5"
+        COMBINE_HIDPI_IMAGES: YES
+    entitlements:
+      path: Sources/Malgeul.entitlements
