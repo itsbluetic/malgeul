@@ -377,7 +377,7 @@ final class StatusBarController: NSObject {
 
     private func log(_ msg: String) {
         let line = "[\(Date())] \(msg)\n"
-        let path = "/tmp/myspeak-swift.log"
+        let path = "/tmp/malgeul.log"
         guard let data = line.data(using: .utf8) else { return }
         if let handle = FileHandle(forWritingAtPath: path) {
             handle.seekToEndOfFile()

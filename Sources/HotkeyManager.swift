@@ -38,7 +38,7 @@ final class HotkeyManager {
 
     private func log(_ msg: String) {
         let line = "[\(Date())] \(msg)\n"
-        let path = "/tmp/myspeak-swift.log"
+        let path = "/tmp/malgeul.log"
         if let handle = FileHandle(forWritingAtPath: path) {
             handle.seekToEndOfFile()
             handle.write(line.data(using: .utf8)!)

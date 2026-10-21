@@ -14,8 +14,8 @@ Python 전신 프로젝트 MySpeak(github.com/itsbluetic/myspeak)의 Swift 재�
 | `README.md` | 사용자용 기능·단축키·빌드·설정·권한 안내 |
 | `LICENSE` | MIT |
 | `scripts/install.sh` | Release 빌드 → Apple Development 인증서 재서명 → `/Applications` 교체 → 실행 (접근성 권한 유지) |
-| `docs/devlog.md` | 심링크 → Obsidian `P260212_MySpeak 음성인식앱/devlog.md` |
-| `docs/next-actions.md` | 심링크 → Obsidian `P260212_MySpeak 음성인식앱/next-actions.md` |
+| `docs/devlog.md` | 심링크 → Obsidian `P261021_malgeul 음성인식앱/devlog.md` |
+| `docs/next-actions.md` | 심링크 → Obsidian `P261021_malgeul 음성인식앱/next-actions.md` |
 
 ## Subdirectories
 | Directory | Purpose |
@@ -43,7 +43,7 @@ Python 전신 프로젝트 MySpeak(github.com/itsbluetic/myspeak)의 Swift 재�
 ## Dependencies
 
 ### External
-- Soniox real-time STT — `wss://stt-rt.soniox.com/transcribe-websocket`, 모델 `stt-rt-v4`
+- Soniox real-time STT — `wss://stt-rt.soniox.com/transcribe-websocket`, 모델 `stt-rt-v5`
 - Apple 프레임워크: AppKit, SwiftUI, AVFoundation, CoreGraphics(CGEvent tap), UserNotifications
 - 빌드 도구: XcodeGen ≥ 2.35, Xcode 15+
 

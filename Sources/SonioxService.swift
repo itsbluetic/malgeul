@@ -12,7 +12,7 @@ final class SonioxService: NSObject, URLSessionWebSocketDelegate {
         let langHints = language == "ko" ? ["ko", "en"] : ["en", "ko"]
         let config: [String: Any] = [
             "api_key": apiKey,
-            "model": "stt-rt-v4",
+            "model": "stt-rt-v5",
             "audio_format": "pcm_s16le",
             "sample_rate": 16000,
             "num_channels": 1,
@@ -101,7 +101,7 @@ final class SonioxService: NSObject, URLSessionWebSocketDelegate {
 
 /// Streams audio to Soniox while recording so the transcript is ready right after stop.
 /// All mutable state is confined to `queue`; sends are issued one at a time to preserve order.
-final class SonioxStreamingSession {
+final class SonioxStreamingSession: @unchecked Sendable {
     private let url = URL(string: "wss://stt-rt.soniox.com/transcribe-websocket")!
     private let chunkBytes = 3200 // ~100ms of 16kHz 16-bit mono
     private let finishTimeout: TimeInterval = 15
@@ -136,7 +136,7 @@ final class SonioxStreamingSession {
             let langHints = language == "ko" ? ["ko", "en"] : ["en", "ko"]
             let config: [String: Any] = [
                 "api_key": apiKey,
-                "model": "stt-rt-v4",
+                "model": "stt-rt-v5",
                 "audio_format": "pcm_s16le",
                 "sample_rate": 16000,
                 "num_channels": 1,
