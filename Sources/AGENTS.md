@@ -12,9 +12,9 @@ Malgeul 앱의 모든 Swift 소스와 번들 메타데이터. 단일 앱 타깃(
 | `MalgeulApp.swift` | `@main` SwiftUI `App` 진입점, `AppDelegate` 연결 |
 | `AppDelegate.swift` | 실행 시 `StatusBarController` 생성 |
 | `StatusBarController.swift` | 메뉴바 아이콘·메뉴 구성, 녹음 토글/취소, 전사→클립보드→`⌘V` 시뮬레이션(`simulatePaste`), 히스토리(최근 10개), 알림 — 앱의 오케스트레이터 |
-| `HotkeyManager.swift` | `CGEvent.tapCreate` 기반 글로벌 단축키 (실패 시 listen-only tap 폴백), `"alt+s"` 형식 문자열 파싱, 접근성 권한 체크 |
-| `AudioRecorder.swift` | `AVAudioEngine` 입력 탭 → 16kHz mono Int16 PCM으로 변환해 메모리에 누적 |
-| `SonioxService.swift` | Soniox WebSocket: config 전송 → 32KB 청크 오디오 전송 → 빈 문자열로 종료 → final 토큰 수집 |
+| `HotkeyManager.swift` | `CGEvent.tapCreate` 기반 글로벌 단축키 (실패 시 listen-only tap 폴백), `"alt+s"`·수정키 전용 `"ctrl+alt"`(뗄 때 토글) 파싱, 매칭 키 입력은 삼킴, 접근성 권한 체크. 로그 `/tmp/myspeak-swift.log` |
+| `AudioRecorder.swift` | `AVAudioEngine` 입력 탭 → 16kHz mono Int16 PCM 변환, `onAudioChunk`로 스트리밍 + 폴백용 전체 누적 |
+| `SonioxService.swift` | `SonioxStreamingSession`: 녹음 시작 시 WebSocket 연결, 100ms 단위 순차 실시간 전송, 종료 시 `""` → final 토큰 수집. 실패 시 폴백용 일괄 `transcribe(audioData:)` 유지 |
 | `ConfigManager.swift` | `AppConfig`(Codable, snake_case 키) 로드/저장, `~/.config/voice-recorder/config.json` |
 | `SoundManager.swift` | 시스템 사운드(Tink/Pop/Glass/Funk/Basso) 피드백 |
 | `Info.plist` | `LSUIElement=true`(Dock 숨김), 마이크·AppleEvents 사용 설명 |
