@@ -16,3 +16,7 @@ DerivedData/
 # Dependencies
 Pods/
 Carthage/
+
+# Obsidian symlinks (local only)
+docs/devlog.md
+docs/next-actions.md
