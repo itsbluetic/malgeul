@@ -9,10 +9,15 @@ final class HotkeyManager {
 
     fileprivate var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
-    fileprivate var recordKeyCode: CGKeyCode = 0
+    // nil key code = modifier-only hotkey (keyCode 0 is "a", so it can't be a sentinel)
+    fileprivate var recordKeyCode: CGKeyCode?
     fileprivate var recordModifiers: CGEventFlags = []
-    fileprivate var langKeyCode: CGKeyCode = 0
+    fileprivate var langKeyCode: CGKeyCode?
     fileprivate var langModifiers: CGEventFlags = []
+    private var recordArmed = false
+    private var langArmed = false
+
+    private static let relevantFlags: CGEventFlags = [.maskAlternate, .maskShift, .maskCommand, .maskControl]
 
     // macOS virtual key codes
     private static let keycodeMap: [String: CGKeyCode] = [
@@ -52,6 +57,8 @@ final class HotkeyManager {
         recordModifiers = rMod
         langKeyCode = lKey
         langModifiers = lMod
+        recordArmed = false
+        langArmed = false
     }
 
     func start() {
@@ -60,7 +67,7 @@ final class HotkeyManager {
         let trusted = checkAccessibilityPermission()
         log("Accessibility trusted: \(trusted)")
 
-        let mask: CGEventMask = (1 << CGEventType.keyDown.rawValue)
+        let mask: CGEventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.flagsChanged.rawValue)
 
         // Use Unmanaged to pass self to C callback
         let selfPointer = Unmanaged.passUnretained(self).toOpaque()
@@ -123,40 +130,77 @@ final class HotkeyManager {
         return trusted
     }
 
-    fileprivate func handleKeyEvent(_ keyCode: CGKeyCode, flags: CGEventFlags) {
-        // Mask to only modifier keys we care about
-        let relevantFlags: CGEventFlags = [.maskAlternate, .maskShift, .maskCommand, .maskControl]
-        let maskedFlags = flags.intersection(relevantFlags)
+    /// Returns true if the event was consumed (should not reach the focused app).
+    fileprivate func handleKeyEvent(_ keyCode: CGKeyCode, flags: CGEventFlags) -> Bool {
+        let maskedFlags = flags.intersection(Self.relevantFlags)
 
-        // Escape cancels recording
+        // Any key press while a modifier-only hotkey is armed cancels it (e.g. ⌃⌥+X shortcuts)
+        recordArmed = false
+        langArmed = false
+
+        // Escape cancels recording (not swallowed)
         if keyCode == 53 {
             DispatchQueue.main.async { [weak self] in
                 self?.onCancelRecord?()
             }
-            return
+            return false
         }
 
         // Record hotkey
-        if keyCode == recordKeyCode && maskedFlags == recordModifiers {
+        if let key = recordKeyCode, keyCode == key && maskedFlags == recordModifiers {
             DispatchQueue.main.async { [weak self] in
                 self?.onToggleRecord?()
             }
-            return
+            return true
         }
 
         // Language hotkey
-        if keyCode == langKeyCode && maskedFlags == langModifiers {
+        if let key = langKeyCode, keyCode == key && maskedFlags == langModifiers {
             DispatchQueue.main.async { [weak self] in
                 self?.onCycleLanguage?()
             }
-            return
+            return true
+        }
+        return false
+    }
+
+    fileprivate func handleFlagsChanged(flags: CGEventFlags) {
+        let maskedFlags = flags.intersection(Self.relevantFlags)
+
+        if recordKeyCode == nil, Self.updateModifierOnly(maskedFlags, hotkey: recordModifiers, armed: &recordArmed) {
+            DispatchQueue.main.async { [weak self] in
+                self?.onToggleRecord?()
+            }
+        }
+        if langKeyCode == nil, Self.updateModifierOnly(maskedFlags, hotkey: langModifiers, armed: &langArmed) {
+            DispatchQueue.main.async { [weak self] in
+                self?.onCycleLanguage?()
+            }
         }
     }
 
-    private static func parseHotkey(_ hotkey: String) -> (CGKeyCode, CGEventFlags) {
+    /// Arm when flags equal the hotkey modifiers; fire when all are released while armed.
+    private static func updateModifierOnly(_ flags: CGEventFlags, hotkey: CGEventFlags, armed: inout Bool) -> Bool {
+        guard !hotkey.isEmpty else { return false }
+        if armed {
+            if flags.isEmpty {
+                armed = false
+                return true
+            }
+            // Partial release of the hotkey modifiers keeps it armed; anything else disarms
+            if flags != hotkey && !(flags.isSubset(of: hotkey)) {
+                armed = false
+            }
+            return false
+        }
+        if flags == hotkey { armed = true }
+        return false
+    }
+
+    private static func parseHotkey(_ hotkey: String) -> (CGKeyCode?, CGEventFlags) {
         let parts = hotkey.lowercased().split(separator: "+").map { $0.trimmingCharacters(in: .whitespaces) }
         var modifiers: CGEventFlags = []
-        var keyCode: CGKeyCode = 0
+        var keyCode: CGKeyCode?
 
         for part in parts {
             if let mod = modifierMap[part] {
@@ -187,13 +231,22 @@ private func hotkeyCallback(
         return Unmanaged.passRetained(event)
     }
 
+    let manager = Unmanaged<HotkeyManager>.fromOpaque(userInfo).takeUnretainedValue()
+
+    if type == .flagsChanged {
+        manager.handleFlagsChanged(flags: event.flags)
+        return Unmanaged.passRetained(event)
+    }
+
     guard type == .keyDown else { return Unmanaged.passRetained(event) }
 
-    let manager = Unmanaged<HotkeyManager>.fromOpaque(userInfo).takeUnretainedValue()
     let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
     let flags = event.flags
 
-    manager.handleKeyEvent(keyCode, flags: flags)
+    // Swallow matched hotkeys (no effect for the listen-only fallback tap)
+    if manager.handleKeyEvent(keyCode, flags: flags) {
+        return nil
+    }
 
     return Unmanaged.passRetained(event)
 }

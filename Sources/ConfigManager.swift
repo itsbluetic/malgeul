@@ -22,7 +22,7 @@ struct AppConfig: Codable {
     }
 
     static let defaultConfig = AppConfig(
-        recordHotkey: "alt+s",
+        recordHotkey: "ctrl+alt",
         langHotkey: "alt+l",
         language: "ko",
         model: "mlx-community/whisper-large-v3-turbo",

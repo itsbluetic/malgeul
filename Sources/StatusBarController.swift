@@ -122,7 +122,7 @@ final class StatusBarController: NSObject {
         let hotkeyItem = NSMenuItem(title: "녹음 단축키 설정", action: nil, keyEquivalent: "")
         let hotkeyMenu = NSMenu()
         let hotkeys: [(String, String)] = [
-            ("alt+s", "⌥S"), ("alt+r", "⌥R"), ("alt+m", "⌥M"),
+            ("ctrl+alt", "⌃⌥"), ("alt+s", "⌥S"), ("alt+r", "⌥R"), ("alt+m", "⌥M"),
             ("ctrl+s", "⌃S"), ("ctrl+r", "⌃R"),
         ]
         for (key, label) in hotkeys {
