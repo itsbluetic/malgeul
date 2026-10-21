@@ -44,6 +44,14 @@ open Malgeul.xcodeproj
 
 Xcode에서 `⌘R`로 빌드 & 실행하면 메뉴바에 🎤 아이콘이 나타납니다.
 
+`/Applications`에 설치하려면:
+
+```bash
+./scripts/install.sh
+```
+
+키체인의 Apple Development 인증서로 서명하므로 재빌드해도 접근성 권한이 유지됩니다 (인증서가 없으면 ad-hoc 서명 — 재설치마다 권한 재허용 필요). 다른 인증서는 `MALGEUL_SIGN_IDENTITY`로 지정할 수 있습니다.
+
 ## 설정
 
 첫 실행 시 `~/.config/voice-recorder/config.json`이 자동 생성됩니다.
