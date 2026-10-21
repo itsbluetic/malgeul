@@ -10,6 +10,7 @@ final class StatusBarController: NSObject {
     private let configManager = ConfigManager.shared
     private let soundManager = SoundManager.shared
 
+    private var streamingSession: SonioxStreamingSession?
     private var transcriptionHistory: [String] = []
     private var cancellables = Set<AnyCancellable>()
 
@@ -230,22 +231,45 @@ final class StatusBarController: NSObject {
     }
 
     private func startRecording() {
+        // Open the streaming session first; audio arriving before it connects is buffered
+        let session = SonioxStreamingSession(
+            apiKey: configManager.config.sonioxApiKey,
+            language: configManager.config.language
+        )
+        session.start()
+        streamingSession = session
+        audioRecorder.onAudioChunk = { [weak session] chunk in
+            session?.append(chunk)
+        }
+
         do {
             try audioRecorder.startRecording()
             setStatusTitle("🔴")
             soundManager.playRecordStart()
         } catch {
+            clearStreamingSession()?.cancel()
             showNotification(title: "오디오 오류", body: error.localizedDescription)
         }
+    }
+
+    /// Detaches the audio callback and returns the current session (if any).
+    private func clearStreamingSession() -> SonioxStreamingSession? {
+        audioRecorder.onAudioChunk = nil
+        let session = streamingSession
+        streamingSession = nil
+        return session
     }
 
     private func stopRecording() {
         setStatusTitle("⏳")
         soundManager.playRecordStop()
 
+        let stopTime = Date()
         let audioData = audioRecorder.stopRecording()
+        let session = clearStreamingSession()
 
         guard !audioData.isEmpty else {
+            session?.cancel()
             updateStatusTitle()
             return
         }
@@ -254,13 +278,20 @@ final class StatusBarController: NSObject {
         let language = configManager.config.language
 
         Task {
-            await transcribeAndPaste(audioData: audioData, apiKey: apiKey, language: language)
+            await transcribeAndPaste(
+                audioData: audioData,
+                session: session,
+                apiKey: apiKey,
+                language: language,
+                stopTime: stopTime
+            )
         }
     }
 
     @objc private func cancelRecording() {
         guard audioRecorder.isRecording else { return }
         audioRecorder.cancelRecording()
+        clearStreamingSession()?.cancel()
         soundManager.playCancel()
         updateStatusTitle()
         showNotification(title: "음성 인식", body: "녹음이 취소되었습니다.")
@@ -268,15 +299,35 @@ final class StatusBarController: NSObject {
 
     // MARK: - Transcription
 
-    private func transcribeAndPaste(audioData: Data, apiKey: String, language: String) async {
+    private func transcribeAndPaste(
+        audioData: Data,
+        session: SonioxStreamingSession?,
+        apiKey: String,
+        language: String,
+        stopTime: Date
+    ) async {
         do {
-            let text = try await sonioxService.transcribe(
-                audioData: audioData,
-                apiKey: apiKey,
-                language: language
-            )
+            var text: String?
+            var mode = "fallback"
+            if let session {
+                do {
+                    text = try await session.finish()
+                    mode = "streaming"
+                } catch {
+                    log("streaming failed, using fallback: \(error.localizedDescription)")
+                }
+            }
+            if text == nil {
+                text = try await sonioxService.transcribe(
+                    audioData: audioData,
+                    apiKey: apiKey,
+                    language: language
+                )
+            }
+            let elapsedMs = Int(Date().timeIntervalSince(stopTime) * 1000)
+            log("transcribe ready mode=\(mode) elapsed=\(elapsedMs)ms audioBytes=\(audioData.count)")
 
-            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let trimmed = (text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
 
             await MainActor.run {
                 if !trimmed.isEmpty {
@@ -292,7 +343,7 @@ final class StatusBarController: NSObject {
 
                     // Auto paste
                     if configManager.config.autoPaste {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                             self?.simulatePaste()
                         }
                     }
@@ -319,6 +370,21 @@ final class StatusBarController: NSObject {
                 updateStatusTitle()
                 buildMenu()
             }
+        }
+    }
+
+    // MARK: - Log
+
+    private func log(_ msg: String) {
+        let line = "[\(Date())] \(msg)\n"
+        let path = "/tmp/myspeak-swift.log"
+        guard let data = line.data(using: .utf8) else { return }
+        if let handle = FileHandle(forWritingAtPath: path) {
+            handle.seekToEndOfFile()
+            handle.write(data)
+            handle.closeFile()
+        } else {
+            FileManager.default.createFile(atPath: path, contents: data)
         }
     }
 

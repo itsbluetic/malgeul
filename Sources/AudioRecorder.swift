@@ -7,6 +7,21 @@ final class AudioRecorder: ObservableObject {
     private var audioEngine: AVAudioEngine?
     private var audioData = Data()
     private let lock = NSLock()
+    private var chunkHandler: ((Data) -> Void)?
+
+    /// Called from the audio tap thread with each converted 16kHz mono s16le chunk.
+    var onAudioChunk: ((Data) -> Void)? {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return chunkHandler
+        }
+        set {
+            lock.lock()
+            chunkHandler = newValue
+            lock.unlock()
+        }
+    }
 
     func startRecording() throws {
         guard !isRecording else { return }
@@ -66,7 +81,14 @@ final class AudioRecorder: ObservableObject {
             ) else { return }
 
             var error: NSError?
+            var inputConsumed = false
             let status = converter.convert(to: convertedBuffer, error: &error) { _, outStatus in
+                // Feed this tap buffer exactly once
+                if inputConsumed {
+                    outStatus.pointee = .noDataNow
+                    return nil
+                }
+                inputConsumed = true
                 outStatus.pointee = .haveData
                 return buffer
             }
@@ -78,7 +100,9 @@ final class AudioRecorder: ObservableObject {
                 let bytes = Data(bytes: channelData[0], count: byteCount)
                 self.lock.lock()
                 self.audioData.append(bytes)
+                let handler = self.chunkHandler
                 self.lock.unlock()
+                handler?(bytes)
             }
         }
 
